@@ -23,10 +23,11 @@ class Neural_Network():
 			for i in range(1, num_hlayers):
 				hlayers.append(other_hlayers)
 
-			self.hlayers = np.array(hlayers)
+
+			self.hlayers = hlayers
 
 			
-			outputs_node_vector = [0 for i in range(num_hlayer_nodes)]
+			outputs_node_vector = [0 for i in range(num_hlayer_nodes + 1)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
 			self.outputs = np.array(outputs, ndmin=2)
 
@@ -41,8 +42,7 @@ class Neural_Network():
 
 	def get_hlayers(self):
 		if self.num_hlayers >= 1:
-			for i in self.hlayers:
-				print(self.hlayers.view())
+			return self.hlayers
 
 		else:
 			return None
@@ -55,8 +55,11 @@ class Neural_Network():
 
 test = Neural_Network(5, 1, 3, 2)
 
+print("inputs: ", end="")
 print(test.get_inputs())
+print("hlayers: ", end="")
 print(test.get_hlayers())
+print("outputs: ", end="")
 print(test.get_outputs())
 
 
