@@ -71,7 +71,7 @@ class NeuralNetwork():
 
 
 
-test = Neural_Network(5, 1, 2, 2)
+test = NeuralNetwork(5, 1, 2, 2)
 
 test.export("test")
 
