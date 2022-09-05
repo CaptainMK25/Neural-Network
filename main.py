@@ -1,7 +1,7 @@
 import numpy as np
-import export_functions
+from utils import *
 
-class Neural_Network():
+class NeuralNetwork():
 	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
 		self.num_inputs = num_inputs
 		self.num_hlayers = num_hlayers
@@ -58,7 +58,7 @@ class Neural_Network():
 	def export(self, name = "NeuralNetworkParameters"):
 		file = open(name + ".txt", mode="w")
 
-		file.write(export_functions.create_paramters_string(self.inputs, self.outputs, self.hlayers))
+		file.write(export.create_paramters_string(self.inputs, self.outputs, self.hlayers))
 
 		file.close()
 		
