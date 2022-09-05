@@ -1,7 +1,7 @@
 import numpy as np
 
 class Neural_Network():
-	def __init__(self, num_inputs = 1, num_hlayers = 0, num_hlayer_nodes = 1, num_outputs = 1):
+	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
 		self.num_inputs = num_inputs
 		self.num_hlayers = num_hlayers
 		self.num_hlayers_nodes = num_hlayer_nodes
@@ -27,10 +27,13 @@ class Neural_Network():
 
 			
 			outputs_node_vector = [0 for i in range(num_hlayer_nodes)]
-			outputs
+			outputs = [outputs_node_vector for i in range(num_outputs)]
+			self.outputs = np.array(outputs)
 
 		else:
-			return
+			outputs_node_vector = [0 for i in range(num_inputs)]
+			outputs = [outputs_node_vector for i in range(num_outputs)]
+			self.outputs = np.array(outputs)
 
 
 	def get_inputs(self):
@@ -43,13 +46,17 @@ class Neural_Network():
 		else:
 			return None
 
+	def get_outputs(self):
+		return self.outputs
 
 
 
-test = Neural_Network(5, 0, 0, 1)
+
+test = Neural_Network(5, 1, 3, 2)
 
 print(test.get_inputs())
 print(test.get_hlayers())
+print(test.get_outputs())
 
 
 
