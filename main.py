@@ -7,33 +7,33 @@ class Neural_Network():
 		self.num_hlayers_nodes = num_hlayer_nodes
 		self.num_outputs = num_outputs
 
-		self.inputs = np.array([0 for i in range(num_inputs)])
+		self.inputs = np.array([0 for i in range(num_inputs)], ndmin=1)
 
 
 		if num_hlayers >= 1:
 			hlayer1_node_vector = [0 for i in range(num_inputs + 1)]
 			hlayer1 = [hlayer1_node_vector for i in range(num_hlayer_nodes)]
-			hlayer1 = np.array(hlayer1)
+			hlayer1 = np.array(hlayer1, ndmin=2)
 
 			hlayers_node_vector = [0 for i in range(num_hlayer_nodes + 1)]
-			hlayers = [hlayers_node_vector for j in range(num_hlayer_nodes)]
-			hlayers = np.array(hlayers)
+			other_hlayers = [hlayers_node_vector for j in range(num_hlayer_nodes)]
+			other_hlayers = np.array(other_hlayers, ndmin=2)
 
 			hlayers = [hlayer1]
 			for i in range(1, num_hlayers):
-				hlayers.append(hlayers)
+				hlayers.append(other_hlayers)
 
-			self.hlayers = hlayers
+			self.hlayers = np.array(hlayers)
 
 			
 			outputs_node_vector = [0 for i in range(num_hlayer_nodes)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
-			self.outputs = np.array(outputs)
+			self.outputs = np.array(outputs, ndmin=2)
 
 		else:
 			outputs_node_vector = [0 for i in range(num_inputs)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
-			self.outputs = np.array(outputs)
+			self.outputs = np.array(outputs, ndmin=2)
 
 
 	def get_inputs(self):
@@ -41,7 +41,8 @@ class Neural_Network():
 
 	def get_hlayers(self):
 		if self.num_hlayers >= 1:
-			return self.hlayers
+			for i in self.hlayers:
+				print(self.hlayers.view())
 
 		else:
 			return None
