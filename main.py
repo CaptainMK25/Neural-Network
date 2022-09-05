@@ -1,4 +1,5 @@
 import numpy as np
+import export_functions
 
 class Neural_Network():
 	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
@@ -26,12 +27,14 @@ class Neural_Network():
 
 			self.hlayers = hlayers
 
-			
-			outputs_node_vector = [0 for i in range(num_hlayer_nodes + 1)]
+			last_hlayer_node_length = len(self.hlayers[len(self.hlayers) - 1][0])
+
+			outputs_node_vector = [0 for i in range(last_hlayer_node_length)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
 			self.outputs = np.array(outputs, ndmin=2)
 
 		else:
+			self.hlayers = []
 			outputs_node_vector = [0 for i in range(num_inputs)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
 			self.outputs = np.array(outputs, ndmin=2)
@@ -52,16 +55,25 @@ class Neural_Network():
 
 
 
+	def export(self, name = "NeuralNetworkParameters"):
+		file = open(name + ".txt", mode="w")
 
-test = Neural_Network(5, 1, 3, 2)
+		file.write(export_functions.create_paramters_string(self.inputs, self.outputs, self.hlayers))
 
-print("inputs: ", end="")
-print(test.get_inputs())
-print("hlayers: ", end="")
-print(test.get_hlayers())
-print("outputs: ", end="")
-print(test.get_outputs())
+		file.close()
+		
 
+
+
+
+
+
+
+
+
+test = Neural_Network(5, 1, 2, 2)
+
+test.export("test")
 
 
 

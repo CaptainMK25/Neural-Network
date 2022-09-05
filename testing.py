@@ -1,7 +1,11 @@
 import numpy as np
 
-test = np.array([[1,2,3], [4,5,6], [7,8,9]])
-test = [test, test]
+test1 = np.array([1,2,3])
+test = [np.array([1,2,3])]
 
-
+print(test1)
 print(test)
+
+'''
+array([1,2,3]) = [1,2,3] with type = ndarray
+'''
