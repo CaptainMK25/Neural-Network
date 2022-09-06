@@ -35,6 +35,7 @@ class NeuralNetwork():
 
 		else:
 			self.hlayers = []
+			self.num_hlayers_nodes = 0
 			outputs_node_vector = [0 for i in range(num_inputs)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
 			self.outputs = np.array(outputs, ndmin=2)
@@ -55,30 +56,72 @@ class NeuralNetwork():
 
 
 
-	def export(self, name = "NeuralNetworkParameters"):
+	def export_parameters(self, name = "parameters"):
 		file = open(name + ".txt", mode="w")
 
-		file.write(export.create_paramters_string(self.inputs, self.outputs, self.hlayers))
+		file.write(exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
 
 		file.close()
+
+		print("Export Successful")
+
+
+	def import_parameters(self, name="parameters", override_structure = True):
+		file = open(name + ".txt", mode="r")
+
+		raw_parameters = file.readlines()
+
+		organized_parameters = importing.read_parameters(raw_parameters)
+		inputs = organized_parameters[0]
+		hlayers = organized_parameters[1]
+		outputs = organized_parameters[2]
+
+		if override_structure:
+			self.inputs = inputs
+			self.hlayers = hlayers
+			self.outputs = outputs
+
+		else:
+			imported_num_inputs = np.size(inputs)
+			imported_num_hlayers = len(hlayers)
+			imported_num_hlayer_nodes = 0
+			imported_num_outputs = np.size(outputs)
+
+			if imported_num_hlayers >= 1:
+				imported_num_hlayer_nodes = np.size(hlayers[0])
+
+			if imported_num_inputs == self.num_inputs and imported_num_hlayers == self.num_hlayers and imported_num_hlayer_nodes == self.num_hlayers_nodes and imported_num_outputs == self.num_outputs:
+				self.inputs = inputs
+				self.hlayers = hlayers
+				self.outputs = outputs
+				
+
+			else:
+				print("Import error, imported network structure does not match current network structure")
+
+		print("Import Successful")
+
+
 		
-
-
-
-
-
-
 
 
 
 test = NeuralNetwork(5, 1, 2, 2)
 
-test.export("test")
+test.import_parameters()
+
+print(test.get_inputs())
+print(test.get_hlayers())
+print(test.get_outputs())
+
 
 
 
 '''
-Each vector will represent one node, we combine all those vectors into one matrix to create a whole input / hidden layer in one variable
-
-Each input will go into each hidden layer node, so each hidden layer node vector will have num_inputs + 1 (for the bias) as length, then duplicate that into the number of hidden layer nodes
+Next step:
+- Error checking the overriden structure import
+- I'd like to visualize the network, maybe do that with tkinter or something, idk
+- Get the network working together, inputs going in, weights playing their role, outputs going out
+- Implement loss function
+- Back propagation
 '''
