@@ -2,7 +2,7 @@
 testing.py
 
 # Import/Export Testing Files
-*/txt
+*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
