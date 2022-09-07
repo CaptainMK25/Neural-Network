@@ -11,7 +11,8 @@ class NeuralNetwork():
 		self.inputs = np.array([0 for i in range(num_inputs)], ndmin=1)
 
 
-		if num_hlayers >= 1:
+		if num_hlayers >= 1 and num_hlayer_nodes > 0:
+			self.has_hlayers = True
 			hlayer1_node_vector = [0 for i in range(num_inputs + 1)]
 			hlayer1 = [hlayer1_node_vector for i in range(num_hlayer_nodes)]
 			hlayer1 = np.array(hlayer1, ndmin=2)
@@ -34,6 +35,7 @@ class NeuralNetwork():
 			self.outputs = np.array(outputs, ndmin=2)
 
 		else:
+			self.has_hlayers = False
 			self.hlayers = []
 			self.num_hlayers_nodes = 0
 			outputs_node_vector = [0 for i in range(num_inputs)]
@@ -106,9 +108,8 @@ class NeuralNetwork():
 
 
 
-test = NeuralNetwork(5, 1, 2, 2)
+test = NeuralNetwork(5, 1, 2, 0)
 
-test.import_parameters()
 
 print(test.get_inputs())
 print(test.get_hlayers())

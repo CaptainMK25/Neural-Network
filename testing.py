@@ -1,9 +1,9 @@
 import numpy as np
 
 
-test = np.array([1,2,3])
+test = [1,2,3,4,5]
 
-print(np.size(test))
+print(test[-1:])
 
 
 # True -> test has stuff in it
