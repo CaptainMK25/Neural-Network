@@ -1,28 +1,6 @@
 import numpy as np
 
-
-def check_valid(organized_parameters):
-    is_valid = True
-
-    inputs = organized_parameters[0]
-    hlayers = organized_parameters[1]
-    outputs = organized_parameters[2]
-
-    num_inputs = np.size(inputs)
-    num_hlayers = len(hlayers)
-    
-    if num_hlayers >= 1:
-        num_hlayers_nodes = np.size(hlayers[0])
-
-        for i in range(len(hlayers)):
-            if i == 0:
-                is_valid = np.size(hlayers[0][0])
-            else:
-                return
-
-
-
-def check_valid_2(raw_parameters):
+def check_valid(raw_parameters):
     inputs = []
     num_inputs = 0
     hlayers = []
@@ -33,9 +11,10 @@ def check_valid_2(raw_parameters):
     for i in range(len(raw_parameters)):
         current_value = read_element(raw_parameters[i])
 
+        # Passed the input check if statement
         if current_value == "input" and read_input:
             return False
-        else:
+        elif current_value == "input":
             read_input = True
             try:
                 inputs = read_element(raw_parameters[i+1])
@@ -43,10 +22,11 @@ def check_valid_2(raw_parameters):
             except:
                 return False
 
+
         if current_value == "output" and read_output:
             return False
-        else:
-            read_output = False
+        elif current_value == "output":
+            read_output = True
             try:
                 count = i + 1
                 while count < len(raw_parameters):
@@ -68,13 +48,12 @@ def check_valid_2(raw_parameters):
                 count += 1
 
             hlayers.append(current_hlayer)
-
+            
+    num_output_parameters = 0
     for i in range(len(outputs)):
-        num_output_parameters = 0
         if i == 0:
             num_output_parameters = len(outputs[0])
-
-            if num_output_parameters != len(hlayers[-1:]) + 1:
+            if num_output_parameters != len(hlayers[len(hlayers)-1]) + 1:
                 return False
 
         else:
@@ -123,8 +102,10 @@ def check_valid_2(raw_parameters):
     return [inputs, hlayers, outputs]
 
 
-
-
+'''
+hlayers = [hlayer1: [[0,0,0,0], [0,0,0,0], [0,0,0,0]],
+           hlayer2: [[0,0,0,0], [0,0,0,0], [0,0,0,0]]]
+'''
 
 def read_element(line):
     if line[0] == "i":
@@ -188,4 +169,4 @@ def read_parameters(raw_parameters):
 file = open("parameters.txt", mode="r")
 file = file.readlines()
 
-print(check_valid_2(file))
+print(check_valid(file))
