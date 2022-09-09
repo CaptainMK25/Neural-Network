@@ -68,12 +68,17 @@ class NeuralNetwork():
 		print("Export Successful")
 
 
-	def import_parameters(self, name="parameters", override_structure = True):
+	def import_parameters(self, override_structure = True, name="parameters"):
 		file = open(name + ".txt", mode="r")
 
 		raw_parameters = file.readlines()
 
-		organized_parameters = importing.read_parameters(raw_parameters)
+		organized_parameters = importing.check_valid(raw_parameters)
+
+		if organized_parameters == False:
+			print("Import Error, imported network structure is invalid")
+			return None
+
 		inputs = organized_parameters[0]
 		hlayers = organized_parameters[1]
 		outputs = organized_parameters[2]
@@ -100,6 +105,7 @@ class NeuralNetwork():
 
 			else:
 				print("Import error, imported network structure does not match current network structure")
+				return None
 
 		print("Import Successful")
 
@@ -108,8 +114,9 @@ class NeuralNetwork():
 
 
 
-test = NeuralNetwork(5, 1, 2, 0)
+test = NeuralNetwork(5, 1, 2, 3)
 
+test.import_parameters()
 
 print(test.get_inputs())
 print(test.get_hlayers())
@@ -120,7 +127,7 @@ print(test.get_outputs())
 
 '''
 Next step:
-- Error checking the overriden structure import
+- Error checking the overriden structure import \rDONE
 - I'd like to visualize the network, maybe do that with tkinter or something, idk
 - Get the network working together, inputs going in, weights playing their role, outputs going out
 - Implement loss function

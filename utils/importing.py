@@ -2,16 +2,25 @@ import numpy as np
 
 def check_valid(raw_parameters):
     inputs = []
-    num_inputs = 0
     hlayers = []
     outputs = []
+
+    current_hlayer = []
+
+    num_inputs = 0
     num_outputs = 0
+    num_output_parameters = 0
+    num_hlayer_nodes = 0
+
+    count = 0
+
     read_input = False
     read_output = False
+
+    
     for i in range(len(raw_parameters)):
         current_value = read_element(raw_parameters[i])
 
-        # Passed the input check if statement
         if current_value == "input" and read_input:
             return False
         elif current_value == "input":
@@ -41,7 +50,6 @@ def check_valid(raw_parameters):
 
         if current_value == "hlayer":
             count = i + 1
-            current_hlayer = []
             while type(read_element(raw_parameters[count])) == list:
                 current_value = read_element(raw_parameters[count])
                 current_hlayer.append(current_value)
@@ -49,7 +57,6 @@ def check_valid(raw_parameters):
 
             hlayers.append(current_hlayer)
             
-    num_output_parameters = 0
     for i in range(len(outputs)):
         if i == 0:
             num_output_parameters = len(outputs[0])
@@ -63,8 +70,8 @@ def check_valid(raw_parameters):
                 return False
 
     
+    
     for i in range(len(hlayers)):
-        num_hlayer_nodes = 0
         if i == 0:
             hlayer1 = hlayers[0]
             num_hlayer_nodes = len(hlayer1)
@@ -102,10 +109,6 @@ def check_valid(raw_parameters):
     return [inputs, hlayers, outputs]
 
 
-'''
-hlayers = [hlayer1: [[0,0,0,0], [0,0,0,0], [0,0,0,0]],
-           hlayer2: [[0,0,0,0], [0,0,0,0], [0,0,0,0]]]
-'''
 
 def read_element(line):
     if line[0] == "i":
@@ -121,52 +124,3 @@ def read_element(line):
         node_parameter_values = line[:-1].strip().split(" ")
         node_parameter_values = [int(i) for i in node_parameter_values]
         return node_parameter_values
-
-
-def set_mode(value, current_mode):
-    status = "unchanged"
-    if type(value) == str:
-        status = "changed"
-        return [value, status]
-
-    else:
-        return [current_mode, status]
-            
-
-def read_parameters(raw_parameters):
-    single_hlayer = []
-    inputs = []
-    hlayers = []
-    outputs = []
-    current_mode = ""
-    for i in raw_parameters:
-        current_value = read_element(i)
-
-        mode_status = set_mode(current_value, current_mode)
-        current_mode = mode_status[0]
-        status = mode_status[1]
-
-
-        if status == "changed" and single_hlayer != []:
-            hlayers.append(np.array(single_hlayer))
-            single_hlayer = []
-
-        if type(current_value).__module__ == np.__name__:
-            if current_mode == "input":
-                inputs = np.array(current_value)
-
-            elif current_mode == "hlayer":
-                single_hlayer.append(np.array(current_value))
-
-            elif current_mode == "output":
-                outputs.append(np.array(current_value))
-
-
-    return [np.array(inputs), hlayers, np.array(outputs)]
-
-
-
-file = open("parameters.txt", mode="r")
-file = file.readlines()
-
-print(check_valid(file))
