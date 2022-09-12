@@ -1,5 +1,6 @@
 # Renders Folder
 media/
+*.mp4
 
 # Testing Files
 testing.py
