@@ -1,6 +1,7 @@
 import numpy as np
 from utils import *
 import Visualize
+import os
 
 class NeuralNetwork():
 	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
@@ -112,8 +113,10 @@ class NeuralNetwork():
 
 
 	def visualize(self):
-		scene_object = Visualize.VisualizeNeuralNetwork(self)
-		scene_object.render()
+		self.export_parameters()
+		Visualize.receive_inputs()
+		os.remove("parameters.txt")
+		Visualize.play()
 
 
 		

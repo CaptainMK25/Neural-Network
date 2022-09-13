@@ -1,6 +1,7 @@
 import numpy as np
 
 def check_valid(raw_parameters):
+    print(raw_parameters)
     inputs = []
     hlayers = []
     outputs = []
@@ -124,3 +125,7 @@ def read_element(line):
         node_parameter_values = line[:-1].strip().split(" ")
         node_parameter_values = [int(i) for i in node_parameter_values]
         return node_parameter_values
+
+
+test = open("parameters.txt", mode="r")
+print(check_valid(test.readlines()))

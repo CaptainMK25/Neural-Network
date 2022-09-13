@@ -1,3 +1,17 @@
+from utils import importing
+
+def receive_neural_network():
+    file = open("parameters.txt", mode="r")
+    layers = importing.check_valid(file.readlines())
+    return get_neural_network_variables(layers)
+
+def get_neural_network_variables(layers):
+    print(layers)
+    inputs = layers[0]
+    hlayers = layers[1]
+    outputs = layers[2]
+    return [inputs, hlayers, outputs]
+
 def get_highest_number_of_nodes(layers):
     highest_num_nodes = 0
     for i in layers:
@@ -53,7 +67,7 @@ def get_optimized_length(max_length_constant, max_length_equation):
         return 0.7 * max_length_equation
 
 
-def round_variables(length_between_layers, length_between_nodes, node_radius):
+def round_dimensions_variables(length_between_layers, length_between_nodes, node_radius):
     length_between_layers = round(length_between_layers, 2)
     length_between_nodes = round(length_between_nodes, 2)
     node_radius = round(node_radius, 2)
@@ -91,7 +105,7 @@ def optimize_variables(num_layers, num_layer_nodes):
     else:
         length_between_nodes = max_length_between_nodes_constant
 
-    return round_variables(length_between_layers, length_between_nodes, node_radius)
+    return round_dimensions_variables(length_between_layers, length_between_nodes, node_radius)
 
 
 

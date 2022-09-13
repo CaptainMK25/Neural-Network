@@ -2,14 +2,21 @@ from manim import *
 import numpy as np
 from utils import visual
 
+
+def receive_inputs():
+    global inputs, hlayers, outputs
+    variables = visual.receive_neural_network()
+    inputs = variables[0]
+    hlayers = variables[1]
+    outputs = variables[2]
+
+
 class VisualizeNeuralNetwork(Scene):
-    def __init__(self, NeuralNetwork):
-        self.neural_network = NeuralNetwork
 
     def construct(self):
-        layers = self.neural_network.get_hlayers()
-        layers.insert(0, self.neural_network.get_inputs())
-        layers.append(self.neural_network.get_outputs())
+        layers = hlayers
+        layers.insert(0, inputs)
+        layers.append(outputs)
 
         middle_layer_index = (len(layers) - 1) / 2
 
@@ -36,6 +43,10 @@ class VisualizeNeuralNetwork(Scene):
 
                 node.move_to((x_coordinate, y_coordinate, 0))
                 self.add(node)
+
+
+    def play(self):
+        self.render()
 
 
 
