@@ -1,5 +1,6 @@
 import numpy as np
 from utils import *
+import Visualize
 
 class NeuralNetwork():
 	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
@@ -110,17 +111,19 @@ class NeuralNetwork():
 		print("Import Successful")
 
 
+	def visualize(self):
+		scene_object = Visualize.VisualizeNeuralNetwork(self)
+		scene_object.render()
+
+
 		
 
 
 
-test = NeuralNetwork(5, 1, 2, 3)
+test = NeuralNetwork(1, 1, 3, 1)
 
-test.import_parameters()
+test.visualize()
 
-print(test.get_inputs())
-print(test.get_hlayers())
-print(test.get_outputs())
 
 
 
@@ -128,8 +131,9 @@ print(test.get_outputs())
 '''
 Next step:
 - Error checking the overriden structure import \rDONE
-- I'd like to visualize the network, maybe do that with tkinter or something, idk
+- Visualize the network using manim
 - Get the network working together, inputs going in, weights playing their role, outputs going out
+- Visualize that process
 - Implement loss function
 - Back propagation
 '''
