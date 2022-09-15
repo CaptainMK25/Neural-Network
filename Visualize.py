@@ -35,7 +35,7 @@ class VisualizeNeuralNetwork(Scene):
                 node = Circle(node_radius)
 
                 node.move_to((x_coordinate, y_coordinate, 0))
-                self.add(node)
+                self.play(Create(node), run_time=0.2)
 
     def receive_inputs(self):
         global inputs, hlayers, outputs
@@ -45,7 +45,7 @@ class VisualizeNeuralNetwork(Scene):
         outputs = variables[2]
 
 
-    def play(self):
+    def play_render(self):
         self.render()
 
 

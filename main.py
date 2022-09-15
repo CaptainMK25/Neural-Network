@@ -123,9 +123,9 @@ class NeuralNetwork():
 		visualize_object = Visualize.VisualizeNeuralNetwork()
 		visualize_object.receive_inputs()
 		os.remove("parameters.txt")
-		visualize_object.play()
+		visualize_object.play_render()
 
-		# open_media_file(r"C:\Users\mrmoh\Downloads\Code\Neural Network\media\videos\visualization\1080p60\VisualizeNeuralNetwork.mp4")
+		open_media_file(r"C:\Users\mrmoh\Downloads\Code\Neural Network\media\videos\1080p60\VisualizeNeuralNetwork.mp4")
 
 
 		
