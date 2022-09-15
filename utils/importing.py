@@ -1,7 +1,6 @@
 import numpy as np
 
 def check_valid(raw_parameters):
-    print(raw_parameters)
     inputs = []
     hlayers = []
     outputs = []

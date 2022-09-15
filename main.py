@@ -3,6 +3,8 @@ from utils import *
 import Visualize
 import os
 
+from manim.utils.file_ops import open_file as open_media_file 
+
 class NeuralNetwork():
 	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
 		self.num_inputs = num_inputs
@@ -60,17 +62,18 @@ class NeuralNetwork():
 
 
 
-	def export_parameters(self, name = "parameters"):
+	def export_parameters(self, name = "parameters", message = True):
 		file = open(name + ".txt", mode="w")
 
 		file.write(exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
 
 		file.close()
 
-		print("Export Successful")
+		if message:
+			print("Export Successful")
 
 
-	def import_parameters(self, override_structure = True, name="parameters"):
+	def import_parameters(self, override_structure = True, name="parameters", message = True):
 		file = open(name + ".txt", mode="r")
 
 		raw_parameters = file.readlines()
@@ -78,7 +81,8 @@ class NeuralNetwork():
 		organized_parameters = importing.check_valid(raw_parameters)
 
 		if organized_parameters == False:
-			print("Import Error, imported network structure is invalid")
+			if message:
+				print("Import Error, imported network structure is invalid")
 			return None
 
 		inputs = organized_parameters[0]
@@ -103,27 +107,32 @@ class NeuralNetwork():
 				self.inputs = inputs
 				self.hlayers = hlayers
 				self.outputs = outputs
-				
+
 
 			else:
-				print("Import error, imported network structure does not match current network structure")
+				if message:
+					print("Import error, imported network structure does not match current network structure")
 				return None
 
-		print("Import Successful")
+		if message:
+			print("Import Successful")
 
 
 	def visualize(self):
-		self.export_parameters()
-		Visualize.receive_inputs()
+		self.export_parameters(message=False)
+		visualize_object = Visualize.VisualizeNeuralNetwork()
+		visualize_object.receive_inputs()
 		os.remove("parameters.txt")
-		Visualize.play()
+		visualize_object.play()
+
+		# open_media_file(r"C:\Users\mrmoh\Downloads\Code\Neural Network\media\videos\visualization\1080p60\VisualizeNeuralNetwork.mp4")
 
 
 		
 
 
 
-test = NeuralNetwork(1, 1, 3, 1)
+test = NeuralNetwork(1, 1, 10, 1)
 
 test.visualize()
 

@@ -3,20 +3,13 @@ import numpy as np
 from utils import visual
 
 
-def receive_inputs():
-    global inputs, hlayers, outputs
-    variables = visual.receive_neural_network()
-    inputs = variables[0]
-    hlayers = variables[1]
-    outputs = variables[2]
-
-
 class VisualizeNeuralNetwork(Scene):
 
     def construct(self):
         layers = hlayers
-        layers.insert(0, inputs)
+        layers.insert(0, [inputs])
         layers.append(outputs)
+        print(layers)
 
         middle_layer_index = (len(layers) - 1) / 2
 
@@ -43,6 +36,13 @@ class VisualizeNeuralNetwork(Scene):
 
                 node.move_to((x_coordinate, y_coordinate, 0))
                 self.add(node)
+
+    def receive_inputs(self):
+        global inputs, hlayers, outputs
+        variables = visual.receive_neural_network()
+        inputs = variables[0]
+        hlayers = variables[1]
+        outputs = variables[2]
 
 
     def play(self):

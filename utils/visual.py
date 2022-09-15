@@ -3,14 +3,8 @@ from utils import importing
 def receive_neural_network():
     file = open("parameters.txt", mode="r")
     layers = importing.check_valid(file.readlines())
-    return get_neural_network_variables(layers)
+    return layers
 
-def get_neural_network_variables(layers):
-    print(layers)
-    inputs = layers[0]
-    hlayers = layers[1]
-    outputs = layers[2]
-    return [inputs, hlayers, outputs]
 
 def get_highest_number_of_nodes(layers):
     highest_num_nodes = 0
@@ -108,10 +102,6 @@ def optimize_variables(num_layers, num_layer_nodes):
     return round_dimensions_variables(length_between_layers, length_between_nodes, node_radius)
 
 
-
-test = [5, 1]
-results = optimize_variables(test[0], test[1])
-print(results)
-print()
-print(get_total_length(test[0], results[0], results[2]))
-print(get_total_width(test[1], results[1], results[2]))
+'''
+Let's see what we're expecting for a neural network
+'''
