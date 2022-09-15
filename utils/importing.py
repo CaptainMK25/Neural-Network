@@ -51,6 +51,7 @@ def check_valid(raw_parameters):
 
         if current_value == "hlayer":
             count = i + 1
+            current_hlayer = []
             while type(read_element(raw_parameters[count])) == list:
                 current_value = read_element(raw_parameters[count])
                 current_hlayer.append(current_value)
@@ -62,6 +63,8 @@ def check_valid(raw_parameters):
         if i == 0:
             num_output_parameters = len(outputs[0])
             if num_output_parameters != len(hlayers[len(hlayers)-1]) + 1:
+                print(num_output_parameters)
+                print(len(hlayers[len(hlayers)-1]) + 1)
                 return False
 
         else:
@@ -125,7 +128,3 @@ def read_element(line):
         node_parameter_values = line[:-1].strip().split(" ")
         node_parameter_values = [int(i) for i in node_parameter_values]
         return node_parameter_values
-
-
-test = open("parameters.txt", mode="r")
-print(check_valid(test.readlines()))
