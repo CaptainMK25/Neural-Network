@@ -1,4 +1,4 @@
-from utils import importing
+from utils.import_export import importing
 
 def receive_neural_network():
     file = open("parameters.txt", mode="r")

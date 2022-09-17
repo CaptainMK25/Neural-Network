@@ -1,8 +1,7 @@
 import numpy as np
-from utils import *
-import Visualize
 import os
-
+import utils.import_export as import_export
+import utils.visuals as visuals
 from manim.utils.file_ops import open_file as open_media_file 
 
 class NeuralNetwork():
@@ -32,18 +31,10 @@ class NeuralNetwork():
 
 			self.hlayers = hlayers
 
-			#last_hlayer_node_length = len(self.hlayers[len(self.hlayers) - 1][0])
-
-			#outputs_node_vector = [0 for i in range(last_hlayer_node_length)]
-			#outputs = [outputs_node_vector for i in range(num_outputs)]
-			#self.outputs = np.array(outputs, ndmin=2)
-
 			last_hlayer_length = len(self.hlayers[len(self.hlayers) - 1])
 
 			outputs_node_vector = [0 for i in range(last_hlayer_length + 1)]
 			self.outputs = np.array(outputs_node_vector, ndmin=2)
-
-			# [[[0,0,0], [0,0,0]], [[0,0,0], [0,0,0]]]
 
 		else:
 			self.has_hlayers = False
@@ -72,7 +63,7 @@ class NeuralNetwork():
 	def export_parameters(self, name = "parameters", message = True):
 		file = open(name + ".txt", mode="w")
 
-		file.write(exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
+		file.write(import_export.exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
 
 		file.close()
 
@@ -85,7 +76,7 @@ class NeuralNetwork():
 
 		raw_parameters = file.readlines()
 
-		organized_parameters = importing.check_valid(raw_parameters)
+		organized_parameters = import_export.importing.check_valid(raw_parameters)
 
 		if organized_parameters == False:
 			if message:
@@ -127,7 +118,7 @@ class NeuralNetwork():
 
 	def visualize(self):
 		self.export_parameters(message=False)
-		visualize_object = Visualize.VisualizeNeuralNetwork()
+		visualize_object = visuals.visualize.VisualizeNeuralNetwork()
 		visualize_object.receive_inputs()
 		os.remove("parameters.txt")
 		visualize_object.play_render()
