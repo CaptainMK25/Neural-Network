@@ -126,21 +126,12 @@ class NeuralNetwork():
 		open_media_file(open_media_file(visualize_object.renderer.file_writer.movie_file_path))
 
 
-		
-
-
-
-test = NeuralNetwork(10, 3, 12, 4)
-
-test.visualize()
-
 
 
 
 '''
-Next step:
-- Error checking the overriden structure import \rDONE
-- Visualize the network using manim
+Next steps:
+- Connect the network's node in the video render
 - Get the network working together, inputs going in, weights playing their role, outputs going out
 - Visualize that process
 - Implement loss function
