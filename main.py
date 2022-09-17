@@ -123,7 +123,7 @@ class NeuralNetwork():
 		os.remove("parameters.txt")
 		visualize_object.play_render()
 
-		open_media_file(r"C:\Users\mrmoh\Downloads\Code\Neural Network\media\videos\1080p60\VisualizeNeuralNetwork.mp4")
+		open_media_file(open_media_file(visualize_object.renderer.file_writer.movie_file_path))
 
 
 		
