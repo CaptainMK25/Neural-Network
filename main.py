@@ -32,11 +32,18 @@ class NeuralNetwork():
 
 			self.hlayers = hlayers
 
-			last_hlayer_node_length = len(self.hlayers[len(self.hlayers) - 1][0])
+			#last_hlayer_node_length = len(self.hlayers[len(self.hlayers) - 1][0])
 
-			outputs_node_vector = [0 for i in range(last_hlayer_node_length)]
-			outputs = [outputs_node_vector for i in range(num_outputs)]
-			self.outputs = np.array(outputs, ndmin=2)
+			#outputs_node_vector = [0 for i in range(last_hlayer_node_length)]
+			#outputs = [outputs_node_vector for i in range(num_outputs)]
+			#self.outputs = np.array(outputs, ndmin=2)
+
+			last_hlayer_length = len(self.hlayers[len(self.hlayers) - 1])
+
+			outputs_node_vector = [0 for i in range(last_hlayer_length + 1)]
+			self.outputs = np.array(outputs_node_vector, ndmin=2)
+
+			# [[[0,0,0], [0,0,0]], [[0,0,0], [0,0,0]]]
 
 		else:
 			self.has_hlayers = False
@@ -132,10 +139,11 @@ class NeuralNetwork():
 
 
 
-test = NeuralNetwork(1, 1, 10, 1)
+test = NeuralNetwork(10, 1, 3, 4)
+
+
 
 test.visualize()
-
 
 
 

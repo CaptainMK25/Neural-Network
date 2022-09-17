@@ -100,8 +100,3 @@ def optimize_variables(num_layers, num_layer_nodes):
         length_between_nodes = max_length_between_nodes_constant
 
     return round_dimensions_variables(length_between_layers, length_between_nodes, node_radius)
-
-
-'''
-Let's see what we're expecting for a neural network
-'''

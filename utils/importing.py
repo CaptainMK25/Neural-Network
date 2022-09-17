@@ -62,8 +62,6 @@ def check_valid(raw_parameters):
         if i == 0:
             num_output_parameters = len(outputs[0])
             if num_output_parameters != len(hlayers[len(hlayers)-1]) + 1:
-                print(num_output_parameters)
-                print(len(hlayers[len(hlayers)-1]) + 1)
                 return False
 
         else:
@@ -127,3 +125,5 @@ def read_element(line):
         node_parameter_values = line[:-1].strip().split(" ")
         node_parameter_values = [int(i) for i in node_parameter_values]
         return node_parameter_values
+
+

@@ -7,9 +7,12 @@ class VisualizeNeuralNetwork(Scene):
 
     def construct(self):
         layers = hlayers
-        layers.insert(0, [inputs])
+        layers.insert(0, [[i] for i in inputs])
         layers.append(outputs)
         print(layers)
+
+        # [layer:[node:[], node:[], node:[]], layer:[], layer:[], layer:[]]
+        # [[[], [], []], [], [], []]
 
         middle_layer_index = (len(layers) - 1) / 2
 
