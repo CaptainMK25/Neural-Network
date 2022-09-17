@@ -139,9 +139,7 @@ class NeuralNetwork():
 
 
 
-test = NeuralNetwork(10, 1, 3, 4)
-
-
+test = NeuralNetwork(10, 3, 12, 4)
 
 test.visualize()
 

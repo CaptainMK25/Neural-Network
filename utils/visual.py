@@ -76,9 +76,9 @@ def optimize_variables(num_layers, num_layer_nodes):
     width_equation_for_node_radius = "(-length_between_nodes / 2) + ((max_width + length_between_nodes) / (2 * num_layer_nodes))"
 
 
-    max_length = 6
-    max_width = 3.5
-    max_length_between_layers_constant = 1
+    max_length = 12
+    max_width = 6
+    max_length_between_layers_constant = 1.5
     max_length_between_nodes_constant = 0.5
 
     node_radius = 0
@@ -89,6 +89,9 @@ def optimize_variables(num_layers, num_layer_nodes):
 
     node_radius = eval(length_equation_for_node_radius)
 
+    print(node_radius)
+    print(get_total_width(num_layer_nodes, max_length_between_nodes_constant, node_radius))
+
     if get_total_width(num_layer_nodes, max_length_between_nodes_constant, node_radius) > max_width:
         node_radius = 0
         max_length_between_nodes_equation = eval(width_equation_for_length_between_nodes)
@@ -98,5 +101,7 @@ def optimize_variables(num_layers, num_layer_nodes):
 
     else:
         length_between_nodes = max_length_between_nodes_constant
+
+    print(round_dimensions_variables(length_between_layers, length_between_nodes, node_radius))
 
     return round_dimensions_variables(length_between_layers, length_between_nodes, node_radius)

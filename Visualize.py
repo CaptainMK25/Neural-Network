@@ -9,10 +9,6 @@ class VisualizeNeuralNetwork(Scene):
         layers = hlayers
         layers.insert(0, [[i] for i in inputs])
         layers.append(outputs)
-        print(layers)
-
-        # [layer:[node:[], node:[], node:[]], layer:[], layer:[], layer:[]]
-        # [[[], [], []], [], [], []]
 
         middle_layer_index = (len(layers) - 1) / 2
 
@@ -38,7 +34,9 @@ class VisualizeNeuralNetwork(Scene):
                 node = Circle(node_radius)
 
                 node.move_to((x_coordinate, y_coordinate, 0))
-                self.play(Create(node), run_time=0.2)
+                self.play(Create(node), run_time=0.1)
+
+        self.wait(10)
 
     def receive_inputs(self):
         global inputs, hlayers, outputs
