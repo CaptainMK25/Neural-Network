@@ -37,34 +37,3 @@ def create_paramters_string(inputs, outputs, hlayers = []):
 	parameters += create_outputs_string(outputs)
 
 	return parameters
-
-
-'''
-i
-0 0 0 0 0
-h
-0 0 0 0 0 0
-0 0 0 0 0 0
-h
-0 0 0
-0 0 0
-h
-0 0 0
-0 0 0
-o
-0 0 0
-'''
-
-'''
-hlayers = {hlayer1:(node:[0,0,0,0,0,0], node:[0,0,0,0,0,0]),
-		   hlayer2:(node:[0,0,0], node:[0,0,0]),
-		   hlayer3:(node:[0,0,0], node:[0,0,0])}
-
-
-hlayers = [[[0,0,0,0,0,0], [0,0,0,0,0,0]],
-		   [[0,0,0], [0,0,0]],
-		   [[0,0,0], [0,0,0]]]
-
-
-		   hlayers[len(hlayers) - 1][0]
-'''

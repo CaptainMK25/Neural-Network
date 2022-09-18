@@ -1,7 +1,8 @@
 import numpy as np
 import os
-import utils.import_export as import_export
-import utils.visuals as visuals
+import utils.importing as importing
+import utils.exporting as exporting
+import utils.visualize as visualize
 
 
 class NeuralNetwork():
@@ -34,7 +35,8 @@ class NeuralNetwork():
 			last_hlayer_length = len(self.hlayers[len(self.hlayers) - 1])
 
 			outputs_node_vector = [0 for i in range(last_hlayer_length + 1)]
-			self.outputs = np.array(outputs_node_vector, ndmin=2)
+			outputs = [outputs_node_vector for i in range(num_outputs)]
+			self.outputs = np.array(outputs, ndmin=2)
 
 		else:
 			self.has_hlayers = False
@@ -63,7 +65,7 @@ class NeuralNetwork():
 	def export_parameters(self, name = "parameters", message = True):
 		file = open(name + ".txt", mode="w")
 
-		file.write(import_export.exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
+		file.write(exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
 
 		file.close()
 
@@ -76,21 +78,17 @@ class NeuralNetwork():
 
 		raw_parameters = file.readlines()
 
-		organized_parameters = import_export.importing.check_valid(raw_parameters)
+		organized_parameters = importing.read_raw_parameters(raw_parameters)
 
 		if organized_parameters == False:
 			if message:
 				print("Import Error, imported network structure is invalid")
 			return None
 
-		inputs = organized_parameters[0]
-		hlayers = organized_parameters[1]
-		outputs = organized_parameters[2]
+		inputs, hlayers, outputs = organized_parameters
 
 		if override_structure:
-			self.inputs = inputs
-			self.hlayers = hlayers
-			self.outputs = outputs
+			self.inputs, self.hlayers, self.outputs = inputs, hlayers, outputs
 
 		else:
 			imported_num_inputs = np.size(inputs)
@@ -118,22 +116,25 @@ class NeuralNetwork():
 
 	def visualize(self, open_media_file = True):
 		self.export_parameters(message=False)
-		visualize_object = visuals.visualize.VisualizeNeuralNetwork()
+		visualize_object = visualize.VisualizeNeuralNetwork()
 		visualize_object.receive_inputs()
 		os.remove("parameters.txt")
 		visualize_object.play_render(open_media_file)
 
 		
 
-test = NeuralNetwork(1, 1, 1, 1)
+test = NeuralNetwork(15, 3, 5, 6)
 
-test.visualize()
+test.visualize(open_media_file=True)
 
 
 
 '''
 Next steps:
-- Connect the network's node in the video render
+- Connect the network's node in the video render r\Done
+- Create a separate function to create the lines
+- Modify the line thickness
+- Create a visualize run time function
 - Get the network working together, inputs going in, weights playing their role, outputs going out
 - Visualize that process
 - Implement loss function
