@@ -2,7 +2,7 @@ import numpy as np
 import os
 import utils.import_export as import_export
 import utils.visuals as visuals
-from manim.utils.file_ops import open_file as open_media_file 
+
 
 class NeuralNetwork():
 	def __init__(self, num_inputs = 1, num_outputs = 1, num_hlayers = 0, num_hlayer_nodes = 1):
@@ -116,16 +116,18 @@ class NeuralNetwork():
 			print("Import Successful")
 
 
-	def visualize(self):
+	def visualize(self, open_media_file = True):
 		self.export_parameters(message=False)
 		visualize_object = visuals.visualize.VisualizeNeuralNetwork()
 		visualize_object.receive_inputs()
 		os.remove("parameters.txt")
-		visualize_object.play_render()
+		visualize_object.play_render(open_media_file)
 
-		open_media_file(open_media_file(visualize_object.renderer.file_writer.movie_file_path))
+		
 
+test = NeuralNetwork(1, 1, 1, 1)
 
+test.visualize()
 
 
 

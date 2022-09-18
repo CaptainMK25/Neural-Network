@@ -1,9 +1,26 @@
 from utils.import_export import importing
+from manim import *
 
 def receive_neural_network():
     file = open("parameters.txt", mode="r")
     layers = importing.check_valid(file.readlines())
     return layers
+
+def generate_nodes(visualize_object, layers, middle_layer_index, length_between_layers, length_between_nodes, node_radius):
+    for i in range(len(layers)):
+        current_layer = layers[i]
+        current_layer_index = i
+        middle_node_index = (len(current_layer) - 1) / 2
+
+        for j in range(len(current_layer)):
+            current_node_index = j
+            x_coordinate = get_coordinate(middle_layer_index, current_layer_index, length_between_layers, node_radius)
+            y_coordinate = get_coordinate(middle_node_index, current_node_index, length_between_nodes, node_radius)
+
+            node = Circle(node_radius)
+
+            node.move_to((x_coordinate, y_coordinate, 0))
+            visualize_object.play(Create(node), run_time=0.1)
 
 
 def get_highest_number_of_nodes(layers):
@@ -89,9 +106,6 @@ def optimize_variables(num_layers, num_layer_nodes):
 
     node_radius = eval(length_equation_for_node_radius)
 
-    print(node_radius)
-    print(get_total_width(num_layer_nodes, max_length_between_nodes_constant, node_radius))
-
     if get_total_width(num_layer_nodes, max_length_between_nodes_constant, node_radius) > max_width:
         node_radius = 0
         max_length_between_nodes_equation = eval(width_equation_for_length_between_nodes)
@@ -101,7 +115,5 @@ def optimize_variables(num_layers, num_layer_nodes):
 
     else:
         length_between_nodes = max_length_between_nodes_constant
-
-    print(round_dimensions_variables(length_between_layers, length_between_nodes, node_radius))
 
     return round_dimensions_variables(length_between_layers, length_between_nodes, node_radius)

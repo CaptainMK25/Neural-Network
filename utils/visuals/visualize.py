@@ -16,25 +16,9 @@ class VisualizeNeuralNetwork(Scene):
 
         variables = visual_helpers.optimize_variables(len(layers), highest_num__layer_nodes)
 
-        length_between_layers = variables[0]
-        length_between_nodes = variables[1]
-        node_radius = variables[2]
+        length_between_layers, length_between_nodes, node_radius = variables
 
-        for i in range(len(layers)):
-            current_layer = layers[i]
-            current_layer_index = i
-            middle_node_index = (len(current_layer) - 1) / 2
-
-            for j in range(len(current_layer)):
-                current_node = current_layer[j]
-                current_node_index = j
-                x_coordinate = visual_helpers.get_coordinate(middle_layer_index, current_layer_index, length_between_layers, node_radius)
-                y_coordinate = visual_helpers.get_coordinate(middle_node_index, current_node_index, length_between_nodes, node_radius)
-
-                node = Circle(node_radius)
-
-                node.move_to((x_coordinate, y_coordinate, 0))
-                self.play(Create(node), run_time=0.1)
+        visual_helpers.generate_nodes(self, layers, middle_layer_index, length_between_layers, length_between_nodes, node_radius)
 
         self.wait(10)
 
@@ -46,5 +30,13 @@ class VisualizeNeuralNetwork(Scene):
         outputs = variables[2]
 
 
-    def play_render(self):
+    def play_render(self, open_media_file = True):
         self.render()
+
+        if open_media_file:
+            open_file(self.renderer.file_writer.movie_file_path)
+
+
+'''
+To create a line between each node, we need to 
+'''
