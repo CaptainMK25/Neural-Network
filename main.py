@@ -65,7 +65,7 @@ class NeuralNetwork():
 	def export_parameters(self, name = "parameters", message = True):
 		file = open(name + ".txt", mode="w")
 
-		file.write(exporting.create_paramters_string(self.inputs, self.outputs, self.hlayers))
+		file.write(exporting.create_parameters_string(self.inputs, self.outputs, self.hlayers))
 
 		file.close()
 
@@ -123,16 +123,14 @@ class NeuralNetwork():
 
 		
 
-test = NeuralNetwork(15, 3, 5, 6)
+test = NeuralNetwork(5, 3, 2, 3)
 
-test.visualize(open_media_file=True)
+test.export_parameters()
 
 
 
 '''
 Next steps:
-- Connect the network's node in the video render r\Done
-- Create a separate function to create the lines
 - Modify the line thickness
 - Create a visualize run time function
 - Get the network working together, inputs going in, weights playing their role, outputs going out

@@ -24,11 +24,14 @@ def create_outputs_string(outputs):
 	for i in outputs:
 		for j in i:
 			outputs_string += str(j) + " "
+		outputs_string += "\n"
+
+	
 
 	return outputs_string
 
 
-def create_paramters_string(inputs, outputs, hlayers = []):
+def create_parameters_string(inputs, outputs, hlayers):
 	parameters = create_inputs_string(inputs)
 
 	if hlayers != []:
