@@ -123,7 +123,7 @@ class NeuralNetwork():
 
 		
 
-test = NeuralNetwork(8,3,5,4)
+test = NeuralNetwork(15, 3, 4, 6)
 
 test.visualize()
 

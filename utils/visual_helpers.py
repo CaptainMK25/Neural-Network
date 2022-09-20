@@ -6,6 +6,15 @@ def receive_neural_network():
     layers = read_raw_parameters(file.readlines())
     return layers
 
+def get_node_run_time(total_number_nodes, total_run_time):
+    total_node_run_time = total_run_time / 2
+    run_time_one_node = total_node_run_time / total_number_nodes
+    return run_time_one_node
+
+def get_line_run_time(total_number_nodes, total_run_time):
+    total_line_run_time = total_run_time / 2
+    run_time_one_line = total_line_run_time / (total_number_nodes ** 2)
+    return run_time_one_line
 
 def get_line_width(total_number_nodes):
     width = 1
@@ -15,11 +24,11 @@ def get_line_width(total_number_nodes):
     return width
 
 def get_total_number_nodes(layers):
-    total = 0
+    total_number_nodes = 0
     for layer in layers:
-        total += len(layer)
+        total_number_nodes += len(layer)
 
-    return total
+    return total_number_nodes
 
 def adjust_coordinates_for_start_line(coordinates, node_radius):
     return [coordinates[0] + node_radius, coordinates[1], coordinates[2]]
@@ -27,7 +36,10 @@ def adjust_coordinates_for_start_line(coordinates, node_radius):
 def adjust_coordinates_for_end_line(coordinates, node_radius):
     return [coordinates[0] - node_radius, coordinates[1], coordinates[2]]
 
-def generate_lines(visualize_object, coordinates_list, node_radius, total_number_nodes):
+def generate_lines(visualize_object, coordinates_list, node_radius, total_number_nodes, total_run_time):
+
+    run_time_one_line = get_line_run_time(total_number_nodes, total_run_time)
+
     for i in range(1, len(coordinates_list)):
         current_coordinates_layer = coordinates_list[i]
 
@@ -39,10 +51,13 @@ def generate_lines(visualize_object, coordinates_list, node_radius, total_number
                 adjusted_current_node_coordinates = adjust_coordinates_for_end_line(current_node_coordinates, node_radius)
                 line = Line(adjusted_previous_node_coordinates, adjusted_current_node_coordinates, color=YELLOW)
                 line.stroke_width = get_line_width(total_number_nodes)
-                visualize_object.play(Create(line), run_time = 0.1)
+                visualize_object.play(Create(line), run_time=run_time_one_line)
 
 
-def generate_nodes_coordinates(visualize_object, layers, middle_layer_index, length_between_layers, length_between_nodes, node_radius):
+def generate_nodes_coordinates(visualize_object, layers, middle_layer_index, length_between_layers, length_between_nodes, node_radius, total_number_nodes, total_run_time):
+
+    run_time_one_node = get_node_run_time(total_number_nodes, total_run_time)
+    
     coordinates_list = []
     for current_layer_index in range(len(layers)):
         current_layer = layers[current_layer_index]
@@ -59,7 +74,7 @@ def generate_nodes_coordinates(visualize_object, layers, middle_layer_index, len
             node = Circle(node_radius)
 
             node.move_to((x_coordinate, y_coordinate, 0))
-            visualize_object.play(Create(node), run_time=0.1)
+            visualize_object.play(Create(node), run_time=run_time_one_node)
 
         coordinates_list.append(current_layer_coordinates)
 
@@ -173,4 +188,15 @@ We will ignore the number of lines for simplicity
 run time = (total run time)/(number of nodes)
 
 We set total run time to a constant, and we always have access to the number of nodes, so we can calculate the run time
+'''
+
+
+'''
+total run time = one node run time * number of nodes
+
+We want to set total run time to 2.5s for nodes, 2.5s for lines
+
+2.5 = one node run time * number of nodes
+
+one node run time = 2.5 / number of nodes
 '''

@@ -12,12 +12,14 @@ class VisualizeNeuralNetwork(Scene):
         highest_num_layer_nodes = get_highest_number_of_nodes(layers)
         total_number_nodes = get_total_number_nodes(layers)
 
+        total_run_time = 5
+
         variables = optimize_variables(len(layers), highest_num_layer_nodes)
         length_between_layers, length_between_nodes, node_radius = variables
 
-        coordinates_list = generate_nodes_coordinates(self, layers, middle_layer_index, length_between_layers, length_between_nodes, node_radius)
+        coordinates_list = generate_nodes_coordinates(self, layers, middle_layer_index, length_between_layers, length_between_nodes, node_radius, total_number_nodes, total_run_time)
 
-        generate_lines(self, coordinates_list, node_radius, total_number_nodes)
+        generate_lines(self, coordinates_list, node_radius, total_number_nodes, total_run_time)
 
         self.wait(2)
 
