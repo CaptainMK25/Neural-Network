@@ -110,7 +110,6 @@ def read_raw_parameters(raw_parameters):
     return [inputs, hlayers, outputs]
 
 
-
 def read_element(line):
     if line[0] == "i":
         return "input"

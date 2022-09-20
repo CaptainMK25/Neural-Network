@@ -6,15 +6,18 @@ def receive_neural_network():
     layers = read_raw_parameters(file.readlines())
     return layers
 
+
 def get_node_run_time(total_number_nodes, total_run_time):
     total_node_run_time = total_run_time / 2
     run_time_one_node = total_node_run_time / total_number_nodes
     return run_time_one_node
 
+
 def get_line_run_time(total_number_nodes, total_run_time):
     total_line_run_time = total_run_time / 2
     run_time_one_line = total_line_run_time / (total_number_nodes ** 2)
     return run_time_one_line
+
 
 def get_line_width(total_number_nodes):
     width = 1
@@ -23,6 +26,7 @@ def get_line_width(total_number_nodes):
 
     return width
 
+
 def get_total_number_nodes(layers):
     total_number_nodes = 0
     for layer in layers:
@@ -30,11 +34,14 @@ def get_total_number_nodes(layers):
 
     return total_number_nodes
 
+
 def adjust_coordinates_for_start_line(coordinates, node_radius):
     return [coordinates[0] + node_radius, coordinates[1], coordinates[2]]
 
+
 def adjust_coordinates_for_end_line(coordinates, node_radius):
     return [coordinates[0] - node_radius, coordinates[1], coordinates[2]]
+
 
 def generate_lines(visualize_object, coordinates_list, node_radius, total_number_nodes, total_run_time):
 
@@ -175,28 +182,3 @@ def optimize_variables(num_layers, num_layer_nodes):
         length_between_nodes = max_length_between_nodes_constant
 
     return round_dimensions_variables(length_between_layers, length_between_nodes, node_radius)
-
-
-
-'''
-total_run_time = (number of nodes + number of lines) * run_time
-
-run_time = (total_run_time)/(number of nodes + number of lines)
-
-We will ignore the number of lines for simplicity
-
-run time = (total run time)/(number of nodes)
-
-We set total run time to a constant, and we always have access to the number of nodes, so we can calculate the run time
-'''
-
-
-'''
-total run time = one node run time * number of nodes
-
-We want to set total run time to 2.5s for nodes, 2.5s for lines
-
-2.5 = one node run time * number of nodes
-
-one node run time = 2.5 / number of nodes
-'''

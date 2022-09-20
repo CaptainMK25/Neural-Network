@@ -50,6 +50,7 @@ class NeuralNetwork():
 	def get_inputs(self):
 		return self.inputs
 
+
 	def get_hlayers(self):
 		if self.num_hlayers >= 1:
 			return self.hlayers
@@ -57,9 +58,9 @@ class NeuralNetwork():
 		else:
 			return None
 
+
 	def get_outputs(self):
 		return self.outputs
-
 
 
 	def export_parameters(self, name = "parameters", message = True):
@@ -131,7 +132,6 @@ test.visualize()
 
 '''
 Next steps:
-- Create a visualize run time function
 - Get the network working together, inputs going in, weights playing their role, outputs going out
 - Visualize that process
 - Implement loss function
