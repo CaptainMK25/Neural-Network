@@ -6,11 +6,18 @@ def receive_neural_network():
     layers = read_raw_parameters(file.readlines())
     return layers
 
+
+def get_line_width(total_number_nodes):
+    width = 1
+    if total_number_nodes < 25:
+        width = -0.15 * (total_number_nodes - 2) + 5
+
+    return width
+
 def get_total_number_nodes(layers):
     total = 0
     for layer in layers:
         total += len(layer)
-        print(len(layer))
 
     return total
 
@@ -20,7 +27,7 @@ def adjust_coordinates_for_start_line(coordinates, node_radius):
 def adjust_coordinates_for_end_line(coordinates, node_radius):
     return [coordinates[0] - node_radius, coordinates[1], coordinates[2]]
 
-def generate_lines(visualize_object, coordinates_list, node_radius):
+def generate_lines(visualize_object, coordinates_list, node_radius, total_number_nodes):
     for i in range(1, len(coordinates_list)):
         current_coordinates_layer = coordinates_list[i]
 
@@ -31,6 +38,7 @@ def generate_lines(visualize_object, coordinates_list, node_radius):
                 adjusted_previous_node_coordinates = adjust_coordinates_for_start_line(previous_node_coordinates, node_radius)
                 adjusted_current_node_coordinates = adjust_coordinates_for_end_line(current_node_coordinates, node_radius)
                 line = Line(adjusted_previous_node_coordinates, adjusted_current_node_coordinates, color=YELLOW)
+                line.stroke_width = get_line_width(total_number_nodes)
                 visualize_object.play(Create(line), run_time = 0.1)
 
 

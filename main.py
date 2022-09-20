@@ -123,15 +123,14 @@ class NeuralNetwork():
 
 		
 
-test = NeuralNetwork(5, 3, 2, 3)
+test = NeuralNetwork(8,3,5,4)
 
-test.export_parameters()
+test.visualize()
 
 
 
 '''
 Next steps:
-- Modify the line thickness
 - Create a visualize run time function
 - Get the network working together, inputs going in, weights playing their role, outputs going out
 - Visualize that process
