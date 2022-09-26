@@ -12,4 +12,6 @@
 ### - Implement a backpropagation algorithm to allow the network to learn from its mistakes and improve
 ### - Implement a function that allows the network to take in training data and learn from it
 
+
+
 ## Thank you for checking this project out, I hope you liked it!
