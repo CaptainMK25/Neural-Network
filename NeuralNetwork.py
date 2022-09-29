@@ -220,7 +220,14 @@ class NeuralNetwork():
 
 
 	def visualize(self, open_media_file=True):
-		# Continue docstrings here!!!
+		"""
+		Visualizes the neural network and renders its video in media/videos/VisualizeNeuralNetwork.mp4
+
+		Parameters
+		----------
+		open_media_file: bool, optional
+			If True, the .mp4 video will open automatically after rendering (default is True)
+		"""
 		self.export_parameters(message=False)
 		visualize_object = visualize.VisualizeNeuralNetwork()
 		visualize_object.receive_inputs()
@@ -229,9 +236,14 @@ class NeuralNetwork():
 
 		
 
-test = NeuralNetwork(15, 3, 4, 6)
+test = NeuralNetwork(3, 1, 2, 2)
 
+print(type(test.get_inputs()))
+
+test.export_parameters()
 test.import_parameters()
+
+print(type(test.get_inputs()))
 
 
 

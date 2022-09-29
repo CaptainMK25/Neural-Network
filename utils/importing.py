@@ -1,9 +1,13 @@
 import numpy as np
 
+# Simplify me!!!
 def read_raw_parameters(raw_parameters):
-    inputs = []
+    """
+    Reads the .txt file to be imported to the neural network, and checks if the .txt file contains a valid neural network structure and values. If the imported file contains a valid neural network, it will read it and transforms into 3 
+    """
+    inputs = np.array([])
     hlayers = []
-    outputs = []
+    outputs = np.array([])
 
     current_hlayer = []
 
@@ -26,7 +30,8 @@ def read_raw_parameters(raw_parameters):
         elif current_value == "input":
             read_input = True
             try:
-                inputs = read_element(raw_parameters[i+1])
+                list_inputs = read_element(raw_parameters[i+1])
+                inputs = np.array(list_inputs)
                 num_inputs = len(inputs)
             except:
                 return False
@@ -40,7 +45,7 @@ def read_raw_parameters(raw_parameters):
                 count = i + 1
                 while count < len(raw_parameters):
                     current_value = read_element(raw_parameters[count])
-                    outputs.append(current_value)
+                    np.append(outputs, current_value)
                     count += 1
 
                 num_outputs = len(outputs)
@@ -49,11 +54,15 @@ def read_raw_parameters(raw_parameters):
                 return False
 
         if current_value == "hlayer":
+            # Problem here, fix soon!!!
             count = i + 1
-            current_hlayer = []
+            current_hlayer = np.array([])
             while type(read_element(raw_parameters[count])) == list:
-                current_value = read_element(raw_parameters[count])
-                current_hlayer.append(current_value)
+                list_current_value = read_element(raw_parameters[count])
+                current_value = np.array(list_current_value)
+                np.append(current_hlayer, current_value)
+                print(current_hlayer)
+                print(current_value)
                 count += 1
 
             hlayers.append(current_hlayer)
@@ -73,6 +82,7 @@ def read_raw_parameters(raw_parameters):
     
     
     for i in range(len(hlayers)):
+        print(hlayers)
         if i == 0:
             hlayer1 = hlayers[0]
             num_hlayer_nodes = len(hlayer1)
@@ -126,3 +136,23 @@ def read_element(line):
         return node_parameter_values
 
 
+
+def change_to_ndarray(list_to_change):
+    pass
+
+def get_list_dimension(list_to_check):
+
+    if type(list_to_check) != list:
+        return 0
+
+    return 1 + get_list_dimension(list_to_check[0])
+    
+
+
+test = np.array([])
+
+test2 = np.array([1,2,3,4,5])
+
+np.append(test, test2)
+
+print(test)
