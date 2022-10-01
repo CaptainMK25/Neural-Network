@@ -236,7 +236,7 @@ class NeuralNetwork():
 
 		
 
-test = NeuralNetwork(3, 1, 2, 2)
+test = NeuralNetwork(4, 2, 2, 4)
 
 print(type(test.get_inputs()))
 

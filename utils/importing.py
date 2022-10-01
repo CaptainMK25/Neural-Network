@@ -45,7 +45,7 @@ def read_raw_parameters(raw_parameters):
                 count = i + 1
                 while count < len(raw_parameters):
                     current_value = read_element(raw_parameters[count])
-                    np.append(outputs, current_value)
+                    outputs = np.append(outputs, current_value)
                     count += 1
 
                 num_outputs = len(outputs)
@@ -60,7 +60,7 @@ def read_raw_parameters(raw_parameters):
             while type(read_element(raw_parameters[count])) == list:
                 list_current_value = read_element(raw_parameters[count])
                 current_value = np.array(list_current_value)
-                np.append(current_hlayer, current_value)
+                current_hlayer = np.append(current_hlayer, current_value)
                 print(current_hlayer)
                 print(current_value)
                 count += 1
@@ -149,10 +149,7 @@ def get_list_dimension(list_to_check):
     
 
 
-test = np.array([])
-
-test2 = np.array([1,2,3,4,5])
-
-np.append(test, test2)
-
+test = np.array([[0,0,0]], dtype=object)
 print(test)
+hey = test.size()
+print(hey)
