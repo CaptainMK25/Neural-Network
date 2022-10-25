@@ -157,7 +157,7 @@ class NeuralNetwork():
 			print("Export Successful")
 
 
-	def import_parameters(self, override_structure=True, name="parameters", message=True):
+	def import_parameters(self, override_structure=True, name="parameters"):
 		"""
 		Imports the parameters of the neural network from a {name}.txt file, and indicates the status of the import if message is True
 
@@ -167,8 +167,6 @@ class NeuralNetwork():
 			If True, the import will completely rewrite the current network's structure to the given {name}.txt file. If False, the import will not pass unless the given structure from {name}.txt corresponds to the current network structure, (default is True)
 		name: str, optional
 			The name of the text file to import from, (default is "parameters")
-		message: bool, optional
-			Prints an indicator message to the user if True (default is True)
 
 		Raises
 		------
@@ -182,28 +180,30 @@ class NeuralNetwork():
 
 		raw_parameters = import_file.readlines()
 
-		organized_parameters = importing.read_raw_parameters(raw_parameters)
+		valid_parsed_parameters = importing.import_parameters(raw_parameters)
 
-		if organized_parameters == False:
-			if message:
-				print("Import Error, imported network structure is invalid")
+		if valid_parsed_parameters == False:
+			print("Import Error, imported network is invalid")
 			return None
 
-		inputs, hlayers, outputs = organized_parameters
+		inputs, hlayers, outputs = valid_parsed_parameters
+
+		imported_num_inputs = np.size(inputs)
+		imported_num_hlayers = len(hlayers)
+		if imported_num_hlayers == 0:
+			imported_num_hlayer_nodes = 0
+		else:
+			imported_num_hlayer_nodes = np.size(hlayers[0])
+		imported_num_outputs = np.size(outputs)
 
 		if override_structure:
 			self.inputs, self.hlayers, self.outputs = inputs, hlayers, outputs
+			self.num_inputs = imported_num_inputs
+			self.num_hlayers = imported_num_hlayers
+			self.num_hlayers_nodes = imported_num_hlayer_nodes
+			self.num_outputs = imported_num_outputs
 
 		else:
-			# Simplify Me!!
-			imported_num_inputs = np.size(inputs)
-			imported_num_hlayers = len(hlayers)
-			imported_num_hlayer_nodes = 0
-			imported_num_outputs = np.size(outputs)
-
-			if imported_num_hlayers >= 1:
-				imported_num_hlayer_nodes = np.size(hlayers[0])
-
 			if imported_num_inputs == self.num_inputs and imported_num_hlayers == self.num_hlayers and imported_num_hlayer_nodes == self.num_hlayers_nodes and imported_num_outputs == self.num_outputs:
 				self.inputs = inputs
 				self.hlayers = hlayers
@@ -211,12 +211,10 @@ class NeuralNetwork():
 
 
 			else:
-				if message:
-					print("Import error, imported network structure does not match current network structure")
+				print("Import error, imported network structure does not match current network structure")
 				return None
 
-		if message:
-			print("Import Successful")
+		print("Import successful")
 
 
 	def visualize(self, open_media_file=True):
@@ -236,15 +234,11 @@ class NeuralNetwork():
 
 		
 
-test = NeuralNetwork(4, 2, 2, 4)
-
-print(type(test.get_inputs()))
+test = NeuralNetwork(10, 4, 5, 3)
 
 test.export_parameters()
+
 test.import_parameters()
-
-print(type(test.get_inputs()))
-
 
 
 

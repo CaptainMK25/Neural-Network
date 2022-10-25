@@ -1,9 +1,9 @@
-from .importing import read_raw_parameters
+from .importing import import_parameters_for_visualization
 from manim import *
 
 def receive_neural_network():
     file = open("parameters.txt", mode="r")
-    layers = read_raw_parameters(file.readlines())
+    layers = import_parameters_for_visualization(file.readlines())
     return layers
 
 
@@ -36,11 +36,11 @@ def get_total_number_nodes(layers):
 
 
 def adjust_coordinates_for_start_line(coordinates, node_radius):
-    return [coordinates[0] + node_radius, coordinates[1], coordinates[2]]
+    return np.array([coordinates[0] + node_radius, coordinates[1], coordinates[2]])
 
 
 def adjust_coordinates_for_end_line(coordinates, node_radius):
-    return [coordinates[0] - node_radius, coordinates[1], coordinates[2]]
+    return np.array([coordinates[0] - node_radius, coordinates[1], coordinates[2]])
 
 
 def generate_lines(visualize_object, coordinates_list, node_radius, total_number_nodes, total_run_time):
