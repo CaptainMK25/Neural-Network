@@ -3,6 +3,7 @@ import os
 import utils.importing as importing
 import utils.exporting as exporting
 import utils.visualize as visualize
+import utils.evaluation as evaluation
 
 class NeuralNetwork():
 	"""
@@ -30,6 +31,12 @@ class NeuralNetwork():
 					   ndarray([ndarray(0.0, 0.0, 0.0), ndarray([0.0, 0.0, 0.0])])]
 	outputs: ndarray
 		2D array containing the output nodes of type ndarray, which contains each output node's values of type float
+	layers: list
+		3D array containing the inputs, hlayers and outputs as equal layers, stored in the same list hierarchy
+
+	activation_function: str
+		String of the name of the activation function to be used by the neural network
+		Set to "reLU" by default
 
 	
 	Methods
@@ -66,15 +73,15 @@ class NeuralNetwork():
 		self.num_hlayers_nodes = num_hlayer_nodes
 		self.num_outputs = num_outputs
 
-		self.inputs = np.array([0 for i in range(num_inputs)], ndmin=1)
+		self.inputs = np.array([0.0 for i in range(num_inputs)], ndmin=1)
 
 
 		if num_hlayers >= 1 and num_hlayer_nodes > 0:
-			hlayer1_node_vector = [0 for i in range(num_inputs + 1)]
+			hlayer1_node_vector = [0.0 for i in range(num_inputs + 1)]
 			hlayer1 = [hlayer1_node_vector for i in range(num_hlayer_nodes)]
 			hlayer1 = np.array(hlayer1, ndmin=2)
 
-			hlayers_node_vector = [0 for i in range(num_hlayer_nodes + 1)]
+			hlayers_node_vector = [0.0 for i in range(num_hlayer_nodes + 1)]
 			other_hlayers = [hlayers_node_vector for j in range(num_hlayer_nodes)]
 			other_hlayers = np.array(other_hlayers, ndmin=2)
 
@@ -87,25 +94,25 @@ class NeuralNetwork():
 
 			last_hlayer_length = len(self.hlayers[len(self.hlayers) - 1])
 
-			outputs_node_vector = [0 for i in range(last_hlayer_length + 1)]
+			outputs_node_vector = [0.0 for i in range(last_hlayer_length + 1)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
 			self.outputs = np.array(outputs, ndmin=2)
 
 		else:
 			self.hlayers = []
 			self.num_hlayers_nodes = 0
-			outputs_node_vector = [0 for i in range(num_inputs)]
+			outputs_node_vector = [0.0 for i in range(num_inputs)]
 			outputs = [outputs_node_vector for i in range(num_outputs)]
 			self.outputs = np.array(outputs, ndmin=2)
+
+		self.generate_layers()
+
+		self.activation_function = "relu"
 
 
 	def get_inputs(self):
 		"""
 		Returns the inputs ndarray of the neural network
-
-		Parameters
-		----------
-		None
 		"""
 		return self.inputs
 
@@ -113,10 +120,6 @@ class NeuralNetwork():
 	def get_hlayers(self):
 		"""
 		Returns the hidden layers' list of the neural network
-
-		Parameters
-		----------
-		None
 		"""
 		if self.num_hlayers >= 1:
 			return self.hlayers
@@ -128,12 +131,71 @@ class NeuralNetwork():
 	def get_outputs(self):
 		"""
 		Returns the outputs ndarray of the neural network
+		"""
+		return self.outputs
+
+
+	def get_layers(self):
+		'''
+		Returns the layers list containing all the layers of the neural network
+		'''
+		return self.layers
+
+	def get_activation_function(self):
+		'''
+		Returns the activation function used by the neural network
+		'''
+		return self.activation_function
+
+	def set_activation_function(self, new_activation_function):
+		'''
+		Sets a new activation function to be used by the neural network. Supported activation functions:\n
+		-reLU\n
+		-Sigmoid\n
+		-Binary\n
+		-Linear\n
 
 		Parameters
 		----------
-		None
-		"""
-		return self.outputs
+		new_activation_function: str
+			Name of the new activation function to be used by the neural network
+
+		Warnings
+		--------
+		For regression, the best activation function is linear
+		For classification, the best activation function is sigmoid
+
+		The reLU may lead to the dying reLU problem, which happens when an input to a node is always negative, so the node never gets activated and therefore, never learns\n
+		The sigmoid may lead to very slow learning rates when used with large inputs, since the sigmoid function flattens with greater values\n
+		The binary is too simple and may lead to a network that can never fit more complex problems\n
+		The linear is, as the name suggests, always linear so it leads to a linear neural network output and may not fit more complex problems
+		'''
+
+		new_activation_function_name = new_activation_function.strip().lower()
+
+		if new_activation_function_name == "relu":
+			self.activation_function = "relu"
+		elif new_activation_function_name == "sigmoid":
+			self.activation_function = "sigmoid"
+		elif new_activation_function_name == "binary":
+			self.activation_function = "binary"
+		elif new_activation_function_name == "linear":
+			self.activation_function = "linear"
+		else:
+			print("Unsupported activation function. Set to default: reLU")
+
+
+	def generate_layers(self):
+		'''
+		Generates the layers list containing all the layers of the neural network
+		'''
+		layers = self.hlayers
+		layers.insert(0, self.inputs)
+		layers.append(self.outputs)
+
+		self.layers = layers
+
+	
 
 
 	def export_parameters(self, name="parameters", message=True):
@@ -214,6 +276,8 @@ class NeuralNetwork():
 				print("Import error, imported network structure does not match current network structure")
 				return None
 
+		self.generate_layers()
+
 		print("Import successful")
 
 
@@ -232,20 +296,18 @@ class NeuralNetwork():
 		os.remove("parameters.txt")
 		visualize_object.play_render(open_media_file)
 
+
+	def evaluate(self):
+		# At this point, we have a layers list which we want to pass in for the helper functions
+		# I want to call a single function here which will return a list of the evaluated outputs of the neural network
+		return evaluation.evaluate_neural_network_outputs(self.layers, self.activation_function)
+
 		
-
-test = NeuralNetwork(10, 4, 5, 3)
-
-test.export_parameters()
-
-test.import_parameters()
 
 
 
 '''
 Next steps:
-- Get the network working together, inputs going in, weights playing their role, outputs going out
-- Visualize that process
 - Implement loss function
 - Back propagation
 '''

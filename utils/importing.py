@@ -346,7 +346,7 @@ def parse_line(line):
             # Removes /n character and splits line into a string of parameters
             node_parameter_values = line[:-1].strip().split(" ")
             # Changing all parameters data types to integer
-            node_parameter_values = [int(i) for i in node_parameter_values]
+            node_parameter_values = [float(i) for i in node_parameter_values]
             return node_parameter_values
         except:
             return False
